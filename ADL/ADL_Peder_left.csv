@@ -1,0 +1,93 @@
+Advanced Data Logging
+
+Side,,Left
+Day month year time,,14 5 2019  10:11
+
+Data Per Preset
+
+\,Volume,Hours
+Preset1,0,18.1752256,
+Preset2,0,0,
+Preset3,0,0,
+Preset4,0,0,
+Preset5,0,0.0027776,
+Preset6,0,0,
+Preset7,0,0,
+Preset8,0,0,
+
+Other data (aggregate)
+No. preset switches,,,,2
+No. device boots,,,,7
+No. power off,,,,0
+Total use time (hours),,,,18.1780032,
+Total time in charger (hours),,,,0,
+Use time in phone streaming (hours),,,,0,
+Use time Mi link up (hours),,,,1.7235008,
+Use time Mi link down (hours),,,,16.4517248,
+
+Histogram on Time (bins in hours)
+\,0- 4 h,4- 8 h,8- 12 h,12- 16 h,16- 20 h,> 20 h
+# of uses,5,2,0,0,0,0,
+
+Histogram on Input power for Preset 1     (bins in dB SPL Use time in hours))   
+\,0- 40 dB,40- 50 dB,50- 60 dB,60- 70 dB,70- 80 dB,80- 90 dB,> 90 dB,
+Use time,0.0263872,13.3852544,3.5817152,0.6235712,0.5513536,0.006944,0,
+
+
+For next two histograms   Q : Quiet  S : Speech  Sp.N : speech in noise  N : noise    S<60 : occurence of Speech below 60 db SPL   
+
+Mean Volume Control Level (dB) per environment in Preset1  
+\,,Q,S<60,S>60,Sp.N<75,Sp.N>75,N<75,N>75
+Mean Vol. Level,,0,0,0,0,0,0,0,
+
+Classified Environment per preset in hours
+\,Q,S<60,S>60,Sp.N<75,Sp.N>75,N<75,N>75
+Preset0,13.2880384,2.687328,0.41664,0.7555072,0.0055552,0.5457984,0.465248,
+Preset1,0,0,0,0,0,0,0,
+Preset2,0,0,0,0,0,0,0,
+Preset3,0,0,0,0,0,0,0,
+
+
+Histogram on Mean Volume Control Level (in dB)
+\,,276h,264h,252h,240h,228h,216h,204h,192h,180h,168h,156h,144h,132h,120h,108h,96h,84h,72h,60h,48h,36h,24h,12h,0h
+Mean Vol. Lev,,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-0.117160373263889,-0.117055739824601,
+
+Usetime Histogram Bass Autosteering is generic for Bass3 Bass4 and Bass45
+
+Usetime Histogram Bass3  (in hours) O = Omni   D = Directional (Dual) Bin. Switch O/D --> D/O
+Usetime Histogram Bass4  (in hours) O = Omni   D = Directional (Dual) PR = Pinna Restoration Bin. Switch PR/D --> D/PR
+Usetime Histogram Bass45 (in hours) O = Omni   D = Directional (Dual) PR = Pinna Restoration Bin. Switch PR/D --> D/PR
+BesM = Better Ear Strategy asymmetrical pattern Monitor BesF = Better Ear Strategy asymmetrical pattern Focus
+\,O/O,O/D,Bin. Switch,D/D
+\,PR/PR,O/D,Bin. Switch,D/D
+\,PR/PR,BesM/BesF,Bin. Switch,D/D
+
+Use time,16.3920064,1.3624128,0.0124992,0.3472,
+
+Usetime on MI Link Status
+\, 1 , 2, 3, 8/9/A/B, other
+Use time,0.5055232,0,1.2304768,0,16.4392256,
+
+Satisfy progress Percentage for HI and binaural paired HI.
+HI Satisfy progress(%) : 0
+HI binaural paired Satisfy Progress(%) : 0
+
+Histogram on Use Time from Full Charge to Low Bat
+\,0- 10 h,10- 12 h,12- 14 h,14- 16 h,16- 18 h,18- 20 h,20- 22 h,22- 24 h,24- 26 h,26- 28 h,28- 30 h,> 30 h
+# of uses,0,0,0,0,0,0,0,0,0,0,0,0,
+
+Histogram on Battery Level when Entering Charger
+\,Lvl 0,Lvl 1,Lvl 2,Lvl 3,Lvl 4,Lvl 5,Lvl 6,Lvl 7,Lvl 8,Lvl 9,Lvl 10,
+# of uses,0,0,0,0,0,0,0,0,0,0,0,
+
+Histogram on Battery Level when Exiting Charger
+\,Lvl 0,Lvl 1,Lvl 2,Lvl 3,Lvl 4,Lvl 5,Lvl 6,Lvl 7,Lvl 8,Lvl 9,Lvl 10,
+# of uses,0,0,0,0,0,0,0,0,0,0,0,
+
+Histogram on Charging Time
+\,0- 0.5 h,0.5- 1 h,1- 1.5 h,1.5- 2 h,2- 2.5 h,2.5- 3 h,3- 3.5 h,3.5- 4 h,4- 4.5 h,> 4.5 h
+# of uses,0,0,0,0,0,0,0,0,0,0,
+
+Histogram on Idle Time in Charger
+\,0- 2 h,2- 4 h,4- 6 h,6- 8 h,8- 10 h,10- 12 h,12- 14 h,> 14 h
+# of uses,0,0,0,0,0,0,0,0,

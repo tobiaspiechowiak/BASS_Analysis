@@ -1,0 +1,38 @@
+---
+title: "BASS Epsilon results"
+output: html_notebook
+---
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+Questionnaire data: 
+
+```{r}
+library('openxlsx')
+library('dplyr')
+library('ggplot2')
+library('reshape2')
+data.path <- 'TRL-5/'
+
+Q.data <- read.xlsx(paste0(data.path,'Questionnaire.xlsx'),sheet = 1)
+
+
+mean.data <- aggregate(Q.data, by = list(Q.data$Artefact.condition, Q.data$Condition), FUN = mean)
+
+
+#try to plot bar plots for the artefacts
+
+ggplot(data=Q.data, aes(x = Artefact.condition, y = Value, fill = Condition)) + 
+  geom_boxplot()
+
+
+
+```
+
+ADL: 
+
+```{r}
+
+
+```
+
