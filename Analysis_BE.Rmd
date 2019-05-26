@@ -12,9 +12,9 @@ library('openxlsx')
 library('dplyr')
 library('ggplot2')
 library('reshape2')
-data.path <- 'TRL-5/'
+data.path.Q <- 'TRL-5/'
 
-Q.data <- read.xlsx(paste0(data.path,'Questionnaire.xlsx'),sheet = 1)
+Q.data <- read.xlsx(paste0(data.path.Q,'Questionnaire.xlsx'),sheet = 1)
 
 
 mean.data <- aggregate(Q.data, by = list(Q.data$Artefact.condition, Q.data$Condition), FUN = mean)
@@ -22,7 +22,7 @@ mean.data <- aggregate(Q.data, by = list(Q.data$Artefact.condition, Q.data$Condi
 
 #try to plot bar plots for the artefacts
 
-ggplot(data=Q.data, aes(x = Artefact.condition, y = Value, fill = Condition)) + 
+ggplot(data=mean.data, aes(x = Group.1, y = Value, fill = Group.2)) + 
   geom_boxplot()
 
 
@@ -32,6 +32,11 @@ ggplot(data=Q.data, aes(x = Artefact.condition, y = Value, fill = Condition)) +
 ADL: 
 
 ```{r}
+data.path.adl <- 'ADL/'
+
+data.adl <- read.xlsx(paste0(data.path.adl,'BASS Epsilon ADL.xlsx'),sheet = 1)
+
+
 
 
 ```
