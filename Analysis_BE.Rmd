@@ -12,6 +12,8 @@ library('openxlsx')
 library('dplyr')
 library('ggplot2')
 library('reshape2')
+library('gridExtra')
+
 data.path.Q <- 'TRL-5/'
 
 Q.data <- read.xlsx(paste0(data.path.Q,'Questionnaire.xlsx'),sheet = 1)
@@ -19,23 +21,170 @@ Q.data <- read.xlsx(paste0(data.path.Q,'Questionnaire.xlsx'),sheet = 1)
 
 mean.data <- aggregate(Q.data, by = list(Q.data$Artefact.condition, Q.data$Condition), FUN = mean)
 
+Q.data$ID <- c(rep('Subject 1',length(Q.data$Subject)/10),
+               rep('Subject 2',length(Q.data$Subject)/10),
+               rep('Subject 3',length(Q.data$Subject)/10),
+               rep('Subject 4',length(Q.data$Subject)/10),
+               rep('Subject 5',length(Q.data$Subject)/10),
+               rep('Subject 6',length(Q.data$Subject)/10),
+               rep('Subject 7',length(Q.data$Subject)/10),
+               rep('Subject 8',length(Q.data$Subject)/10),
+               rep('Subject 9',length(Q.data$Subject)/10),
+               rep('Subject 10',length(Q.data$Subject)/10))
+
+Q.data$Artefact.condition <- factor(Q.data$Artefact.condition,levels = c('A1','A2','A3','A4','A5','A6','A7','A8','A9','A10','A11','A12'))
+Q.data$ID <- factor(Q.data$ID,levels = c('Subject 1','Subject 2', 'Subject 3','Subject 4','Subject 5','Subject 6', 'Subject 7',
+                                                   'Subject 8','Subject 9','Subject 10'))
 
 #try to plot bar plots for the artefacts
 
-ggplot(data=mean.data, aes(x = Group.1, y = Value, fill = Group.2)) + 
-  geom_boxplot()
+#png(filename='Artefacts_barplot.png', width = 1000, height = 600)
+
+ggplot(data=Q.data[Q.data$Condition == '2-mic',], aes(x = Artefact.condition, y = Value)) + 
+  geom_bar(stat = 'identity',position = 'dodge', aes(fill=ID)) +
+  scale_y_continuous(labels = c('None','Minor','Moderate','Critical'), name = 'Severity') +
+  theme(legend.position = 'none') + 
+  labs(title = '2-mic PR') + 
+  scale_x_discrete(name = '')+
+  theme(axis.text=element_text(size=15),
+        axis.title=element_text(size=15),
+        title = element_text(size=16, face = 'bold'))
 
 
+
+ggplot(data=Q.data[Q.data$Condition == '3-mic',], aes(x = Artefact.condition, y = Value)) + 
+  geom_bar(stat = 'identity',position = 'dodge', aes(fill=ID)) + 
+  theme(legend.position = 'none')  +
+  scale_y_continuous(labels = c('None','Minor','Moderate','Critical'), name = 'Severity') + 
+  labs(title = '3-mic PR')+ 
+  scale_x_discrete(name = '') +
+  theme(axis.text=element_text(size=15),
+        axis.title=element_text(size=15),
+        title = element_text(size=16, face = 'bold'))
+
+grid.arrange(p1,p2,nrow=2)
+
+
+#dev.off()
+
+#now with points
+
+png(filename = 'Artefact_point_plot.png', width = 1000, height = 600)
+
+p1 <- ggplot(data=Q.data[Q.data$Condition == '2-mic',], aes(x = Artefact.condition, y = Value)) + 
+ geom_jitter(aes(color=ID), width = 0.2, height = 0.015, size=3, shape='square') + 
+  scale_y_continuous(labels = c('None','Minor','Moderate','Critical'), name = 'Severity') +
+  theme(legend.position = 'none') + 
+  labs(title = '2-mic BASS Epsilon') + 
+  scale_x_discrete(name = '')+
+  theme(axis.text=element_text(size=16),
+        axis.title=element_text(size=16),
+        title = element_text(size=17, face = 'bold'))
+
+
+p2 <- ggplot(data=Q.data[Q.data$Condition == '3-mic',], aes(x = Artefact.condition, y = Value)) + 
+ geom_jitter(aes(color=ID), width = 0.2, height = 0.015, size=3, shape='square') + 
+  scale_y_continuous(labels = c('None','Minor','Moderate','Critical'), name = 'Severity') +
+  theme(legend.position = 'none') + 
+  labs(title = '3-mic BASS Epsilon') + 
+  scale_x_discrete(name = '') +
+  theme(axis.text=element_text(size=16),
+        axis.title=element_text(size=16),
+        title = element_text(size=17, face = 'bold'))
+
+
+grid.arrange(p1,p2,nrow=2)
+
+
+dev.off()
 
 ```
 
 ADL: 
 
 ```{r}
+library('dplyr')
+
 data.path.adl <- 'ADL/'
 
 data.adl <- read.xlsx(paste0(data.path.adl,'BASS Epsilon ADL.xlsx'),sheet = 1)
 
+# Use time 
+data.adl$Subject[data.adl$Subject == 'Peder'] <- c('Subject 1')
+data.adl$Subject[data.adl$Subject == 'Derya'] <- c('Subject 2')
+data.adl$Subject[data.adl$Subject == 'Rene'] <- c('Subject 3')
+data.adl$Subject[data.adl$Subject == 'Kimi'] <- c('Subject 4')
+data.adl$Subject[data.adl$Subject == 'Helga'] <- c('Subject 5')
+data.adl$Subject[data.adl$Subject == 'Andreas'] <- c('Subject 6')
+data.adl$Subject[data.adl$Subject == 'Brent'] <- c('Subject 7')
+data.adl$Subject[data.adl$Subject == 'Charlotte'] <- c('Subject 8')
+data.adl$Subject[data.adl$Subject == 'Gerd'] <- c('Subject 9')
+data.adl$Subject[data.adl$Subject == 'Rasmus'] <- c('Subject 10')
+
+data.adl$Subject <- factor(data.adl$Subject, levels =  c('Subject 1','Subject 2', 'Subject 3','Subject 4','Subject 5','Subject 6', 'Subject7','Subject 8','Subject 9','Subject 10'))
+
+
+png(filename = 'Usetime.png',width = 800, 400)
+
+ggplot(data=data.adl, aes(x = Subject, y = Time)) + 
+  geom_bar(stat = 'identity', aes(fill= Subject)) + 
+  scale_x_discrete(name = '') + 
+  scale_y_continuous(name = 'Use Time (h)') +
+  theme(axis.text=element_text(size=14),
+        axis.title=element_text(size=14),
+        title = element_text(size=15, face = 'bold'))
+  
+dev.off()
+
+
+
+# Bass Modes
+data.adl$`MIE / MIE` <- data.adl$`MIE/MIE` / data.adl$Time * 100
+data.adl$`Focus / Monitor` <- data.adl$`Focus/Monitor` / data.adl$Time * 100
+data.adl$`Monitor / Focus` <- data.adl$`Monitor/Focus` / data.adl$Time * 100
+data.adl$`DIR / DIR` <- data.adl$`DIR/DIR` / data.adl$Time * 100
+
+data.adl.modes <- data.adl[, c(1,14,15,16,17)] %>% melt( id.vars = 'Subject')
+
+png(filename = 'BASS Modes Time.png', width = 1000, height = 500)
+
+ggplot(data=data.adl.modes, aes(x = variable, y = value, fill = Subject)) +
+  geom_bar(stat = 'identity',position = 'dodge') +
+  theme(axis.text=element_text(size=16),
+        axis.title=element_text(size=16),
+        title = element_text(size=17, face = 'bold')) + 
+  scale_y_continuous(limits= c(0,100), name = 'Relative Use Time %') + 
+  scale_x_discrete(name='')
+        
+  
+
+dev.off()
+
+
+# Environmental classifier 
+
+data.adl$`Quiet` <- data.adl$Q / data.adl$Time * 100
+data.adl$`Speech < 60 dB` <- data.adl$`S<60` / data.adl$Time * 100
+data.adl$`Speech > 60 dB` <- data.adl$`S>60` / data.adl$Time * 100
+data.adl$`Speech-in-Noise < 75 dB` <- data.adl$`Sp.N<75` / data.adl$Time * 100
+data.adl$`Speech-in-Noise > 75 dB` <- data.adl$`Sp.N>75` / data.adl$Time * 100
+data.adl$`Noise < 75 dB` <- data.adl$`N<75` / data.adl$Time * 100
+data.adl$`Noise > 75 dB` <- data.adl$`N>75` / data.adl$Time * 100
+
+
+data.adl.EC <- data.adl[,c(1,18:24)] %>% melt(id.vars = 'Subject')
+
+png(filename = 'Environmental Classifier.png', width = 1500, height = 600)
+
+ggplot(data=data.adl.EC, aes(x = variable, y = value, fill = Subject)) +
+  geom_bar(stat = 'identity',position = 'dodge') +
+  theme(axis.text=element_text(size=16),
+        axis.title=element_text(size=16),
+        title = element_text(size=17, face = 'bold')) + 
+  scale_y_continuous(limits= c(0,100), name = 'Relative Use Time %') + 
+  scale_x_discrete(name='')
+
+dev.off()
 
 
 
